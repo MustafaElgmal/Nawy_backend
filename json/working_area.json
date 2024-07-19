@@ -1,0 +1,212 @@
+[
+  {
+    "name": "New Cairo",
+    "description": "New Cairo City is sprawled across 85,000 acres of land and across that area, it includes countless important destinations and facilities, making it one of the best places to live in Egypt.",
+    "url": "https://prod-images.cooingestate.com/processed/area/image/2/high.webp",
+    "properties": [
+      {
+        "name": "Palm Hills New Cairo",
+        "owner": "Palm Hills Developments",
+        "coverUrl": "https://prod-images.cooingestate.com/processed/compound_image/image/3925/high.webp",
+        "downPaymentPercentage": 0.05,
+        "numberOfYear": 9,
+        "units": [
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/234086/high.webp",
+            "bedrooms": 3,
+            "bathrooms": 4,
+            "squareFootage": 227,
+            "total_price": 37230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          },
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/83203/high.webp",
+            "bedrooms": 6,
+            "bathrooms": 6,
+            "squareFootage": 388,
+            "total_price": 40230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/210950/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 158,
+            "total_price": 17230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/287785/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 227,
+            "total_price": 15230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          }
+        ]
+      },
+      {
+        "name": "ZED East",
+        "owner": "Ora Developers",
+        "coverUrl": "https://prod-images.cooingestate.com/processed/compound_image/image/2023/high.webp",
+        "downPaymentPercentage": 0.05,
+        "numberOfYear": 9,
+        "units": [
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/234086/high.webp",
+            "bedrooms": 3,
+            "bathrooms": 4,
+            "squareFootage": 227,
+            "total_price": 37230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          },
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/83203/high.webp",
+            "bedrooms": 6,
+            "bathrooms": 6,
+            "squareFootage": 388,
+            "total_price": 40230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/210950/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 158,
+            "total_price": 17230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/287785/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 227,
+            "total_price": 15230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          }
+        ]
+      },
+      {
+        "name": "DISTRICT 5 New Cairo",
+        "owner": "Marakez",
+        "coverUrl": "https://prod-images.cooingestate.com/processed/compound_image/image/1595/high.webp",
+        "downPaymentPercentage": 0.05,
+        "numberOfYear": 9,
+        "units": [
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/234086/high.webp",
+            "bedrooms": 3,
+            "bathrooms": 4,
+            "squareFootage": 227,
+            "total_price": 37230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          },
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/83203/high.webp",
+            "bedrooms": 6,
+            "bathrooms": 6,
+            "squareFootage": 388,
+            "total_price": 40230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/210950/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 158,
+            "total_price": 17230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/287785/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 227,
+            "total_price": 15230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          }
+        ]
+      },
+      {
+        "name": "Mountain View ICity New Cairo",
+        "owner": "Mountain View",
+        "coverUrl": "https://prod-images.cooingestate.com/processed/compound_image/image/1109/high.webp",
+        "downPaymentPercentage": 0.05,
+        "numberOfYear": 9,
+        "units": [
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/234086/high.webp",
+            "bedrooms": 3,
+            "bathrooms": 4,
+            "squareFootage": 227,
+            "total_price": 37230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          },
+          {
+            "type": "villa",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/83203/high.webp",
+            "bedrooms": 6,
+            "bathrooms": 6,
+            "squareFootage": 388,
+            "total_price": 40230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/210950/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 158,
+            "total_price": 17230000,
+            "isReady": 1
+          },
+          {
+            "type": "appartment",
+            "url": "https://prod-images.cooingestate.com/processed/property_image/image/287785/high.webp",
+            "bedrooms": 2,
+            "bathrooms": 3,
+            "squareFootage": 227,
+            "total_price": 15230000,
+            "isReady": 0,
+            "deliveryDate": "2028-12-30"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "6th Of October City",
+    "description": "6th of October City rolls on 119.2 thousand acres of land in Giza Governate. The area has been gaining popularity for its wide array of facilities and high-end gate communities that allows its residents to leave the crowds of Cairo behind and enjoy a life of tranquility in 6 October.",
+    "url": "https://prod-images.cooingestate.com/processed/area/image/1/high.webp"
+  },
+  {
+    "name": "North Coast",
+    "description": "Famous for its pristine beaches and nightlife venues, the North Coast is one of the most popular summer destinations in Egypt. North Coast stretches from Alexandria to Marsa Matrouh covering an area of 500 SQ KM.",
+    "url": "https://prod-images.cooingestate.com/processed/area/image/3/high.webp"
+  },
+  {
+    "name": "El Gouna",
+    "description": "El Gouna is Orascom Development’s flagship town and the Group’s “Life as it should be” development benchmark. It is a self-sufficient, fully integrated resort town, with a water-tides’ naturally protected area, thanks to the surrounding reefs.",
+    "url": "https://prod-images.cooingestate.com/processed/area/image/5/high.webp"
+  }
+]

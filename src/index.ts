@@ -7,10 +7,10 @@ import { connectionDB } from "./db/connection";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import { swaggerOptions } from "./core/configrations/swager/swager.config";
-import supportRouter from "../src/modules/support/support.contoller";
-import workingAreaRouter from "../src/modules/working_area/working_area.contoller";
-import propertyRouter from "../src/modules/property/property.contoller"
-import unitRouter from '../src/modules/unit/unit.contoller'
+import supportRouter from "./modules/support/support.contoller";
+import workingAreaRouter from "./modules/working_area/working_area.contoller";
+import propertyRouter from "./modules/property/property.contoller"
+import unitRouter from './modules/unit/unit.contoller'
 
 const app = express();
 config();

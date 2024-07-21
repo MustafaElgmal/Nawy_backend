@@ -16,49 +16,87 @@ const router = Router();
  *         id:
  *           type: string
  *           format: uuid
- *           description: The unique identifier of the property
  *         name:
  *           type: string
- *           description: The name of the property
  *         owner:
  *           type: string
- *           description: The owner of the property
  *         coverUrl:
  *           type: string
- *           format: uri
- *           description: The URL of the cover image for the property
+ *           format: url
  *         downPaymentPercentage:
  *           type: number
  *           format: decimal
- *           description: The down payment percentage for the property
  *         numberOfYear:
  *           type: integer
- *           description: The number of years for the property
- *         units:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/Unit'
- *         working_area:
- *           $ref: '#/components/schemas/WorkingArea'
  *         working_areaId:
  *           type: string
  *           format: uuid
- *           description: The ID of the working area associated with the property
- *         createdAt:
+ *     CreatePropertyRequest:
+ *       type: object
+ *       properties:
+ *         name:
  *           type: string
- *           format: date-time
- *           description: The date and time when the property was created
- *         updatedAt:
+ *         owner:
  *           type: string
- *           format: date-time
- *           description: The date and time when the property was last updated
- *       required:
- *         - name
- *         - owner
- *         - coverUrl
- *         - downPaymentPercentage
- *         - numberOfYear
- *         - working_areaId
+ *         coverUrl:
+ *           type: string
+ *         downPaymentPercentage:
+ *           type: number
+ *         numberOfYear:
+ *           type: number
+ *     UpdatePropertyRequest:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         owner:
+ *           type: string
+ *         coverUrl:
+ *           type: string
+ *           format: url
+ *         downPaymentPercentage:
+ *           type: number
+ *           format: decimal
+ *         numberOfYear:
+ *           type: integer
+ *     PropertiesResponse:
+ *       type: object
+ *       properties:
+ *         data:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Property'
+ *     SuccessResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     NotFoundResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     ServerErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     BadResponse:
+ *       type: object
+ *       properties:
+ *         errors:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               type:
+ *                 type: string
+ *               msg:
+ *                 type: string
+ *               param:
+ *                 type: string
+ *               location:
+ *                 type: string
  */
 
 /**
@@ -84,62 +122,27 @@ const router = Router();
  *       '201':
  *         description: Property created successfully
  *         content:
- *           application/json:    
+ *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/CreatePropertyResponse'
+ *               $ref: '#/components/schemas/SuccessResponse'
  *       '400':
  *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/BadResponse'
  *       '404':
  *         description: Property not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *
- * components:
- *   schemas:
- *     CreatePropertyRequest:
- *       type: object
- *       properties:
- *         name:
- *           type: string
- *         owner:
- *           type: string
- *         coverUrl:
- *           type: string
- *         downPaymentPercentage:
- *           type: number
- *         numberOfYear:
- *           type: number
- *     CreatePropertyResponse:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *     ErrorResponse:
- *       type: object
- *       properties:
- *         errors:
- *           type: array
- *           items:
- *             type: object
- *             properties:
- *               msg:
- *                 type: string
- *               param:
- *                 type: string
- *               location:
- *                 type: string
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.post(
   "/:id",
@@ -188,36 +191,12 @@ router.post(
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/PropertiesResponse'
- *       '400':
- *         description: Bad request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     PropertiesResponse:
- *       type: object
- *       properties:
- *         items:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/Property'
- *
- *     Error:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *           description: Error message
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.get("/", async (req, res) => {
   try {
@@ -247,51 +226,19 @@ router.get("/", async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Property'
+ *               $ref: '#/components/schemas/PropertiesResponse'
  *       '404':
  *         description: Property not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     Property:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *           format: uuid
- *         name:
- *           type: string
- *         owner:
- *           type: string
- *         coverUrl:
- *           type: string
- *           format: uri
- *         downPaymentPercentage:
- *           type: number
- *           format: decimal
- *         numberOfYear:
- *           type: integer
- *         working_areaId:
- *           type: string
- *           format: uuid
- *
- *     Error:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *           description: Error message
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.get("/:name", async (req, res) => {
   const { name } = req.params;
@@ -332,73 +279,25 @@ router.get("/:name", async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Property'
+ *               $ref: '#/components/schemas/SuccessResponse'
  *       '404':
  *         description: Property not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '400':
  *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     UpdatePropertyRequest:
- *       type: object
- *       properties:
- *         name:
- *           type: string
- *         owner:
- *           type: string
- *         coverUrl:
- *           type: string
- *           format: uri
- *         downPaymentPercentage:
- *           type: number
- *           format: decimal
- *         numberOfYear:
- *           type: integer
- *
- *     Property:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *           format: uuid
- *         name:
- *           type: string
- *         owner:
- *           type: string
- *         coverUrl:
- *           type: string
- *           format: uri
- *         downPaymentPercentage:
- *           type: number
- *           format: decimal
- *         numberOfYear:
- *           type: integer
- *         working_areaId:
- *           type: string
- *           format: uuid
- *
- *     Error:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *           description: Error message
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.put(
   "/:id",
@@ -445,23 +344,13 @@ router.put(
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *           description: Error message
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 
 router.delete("/:id", async (req: Request, res: Response) => {

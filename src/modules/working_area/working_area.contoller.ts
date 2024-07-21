@@ -6,40 +6,28 @@ import { WorkingArea } from "../../infrastructure/entities/working_area/working_
 const router = Router();
 /**
  * @swagger
- * /api/workingarea:
- *   post:
- *     tags:
- *       - Working Areas
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/WorkingAreaInput'
- *     responses:
- *       '201':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/WorkingArea'
- *       '400':
- *         description: Bad request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       '500':
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
  * components:
  *   schemas:
- *     WorkingAreaInput:
+ *     WorkingArea:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         name:
+ *           type: string
+ *         description:
+ *           type: string
+ *         url:
+ *           type: string
+ *           format: url
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *     CreateWorkingAreaRequest:
  *       type: object
  *       properties:
  *         name:
@@ -52,10 +40,90 @@ const router = Router();
  *           type: string
  *           format: url
  *           description: URL of the working area
- *       required:
- *         - name
- *         - description
- *         - url
+ *     UpdateWorkingAreaRequest:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Name of the working area
+ *         description:
+ *           type: string
+ *           description: Description of the working area
+ *         url:
+ *           type: string
+ *           format: url
+ *           description: URL of the working area
+ *     WorkingAreaResponse:
+ *       type: object
+ *       properties:
+ *         data:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/WorkingArea'
+ *     SuccessResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     NotFoundResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     ServerErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     BadResponse:
+ *       type: object
+ *       properties:
+ *         errors:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               type:
+ *                 type: string
+ *               msg:
+ *                 type: string
+ *               param:
+ *                 type: string
+ *               location:
+ *                 type: string
+ */
+
+/**
+ * @swagger
+ * /api/workingarea:
+ *   post:
+ *     tags:
+ *       - Working Areas
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateWorkingAreaRequest'
+ *     responses:
+ *       '201':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *       '400':
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadResponse'
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 
 router.post(
@@ -69,7 +137,7 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const workingarea=await WorkingArea.create({
+      const workingarea = await WorkingArea.create({
         name,
         description,
         url,
@@ -94,37 +162,13 @@ router.post(
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/WorkingArea'
- *       '400':
- *         description: Bad request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/WorkingAreaResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *           description: Error message
- *         status:
- *           type: integer
- *           description: HTTP status code
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.get("/", async (req, res) => {
   try {
@@ -155,48 +199,19 @@ router.get("/", async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/WorkingArea'
+ *               $ref: '#/components/schemas/WorkingAreaResponse'
  *       '404':
  *         description: Working area not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     WorkingArea:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *           format: uuid
- *           description: Unique identifier of the working area
- *         name:
- *           type: string
- *           description: Name of the working area
- *         description:
- *           type: string
- *           description: Description of the working area
- *         url:
- *           type: string
- *           format: uri
- *           description: URL of the working area
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: Timestamp of when the working area was created
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: Timestamp of when the working area was last updated
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.get("/:name", async (req, res) => {
   const { name } = req.params;
@@ -229,74 +244,32 @@ router.get("/:name", async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UpdateWorkingArea'
+ *             $ref: '#/components/schemas/UpdateWorkingAreaRequest'
  *     responses:
  *       '200':
  *         description: Successful response
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/WorkingArea'
+ *               $ref: '#/components/schemas/SuccessResponse'
  *       '404':
  *         description: Working area not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '400':
  *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     UpdateWorkingArea:
- *       type: object
- *       properties:
- *         name:
- *           type: string
- *           description: Name of the working area
- *         description:
- *           type: string
- *           description: Description of the working area
- *         url:
- *           type: string
- *           format: uri
- *           description: URL of the working area
- *     WorkingArea:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *           format: uuid
- *           description: Unique identifier of the working area
- *         name:
- *           type: string
- *           description: Name of the working area
- *         description:
- *           type: string
- *           description: Description of the working area
- *         url:
- *           type: string
- *           format: uri
- *           description: URL of the working area
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: Timestamp of when the working area was created
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: Timestamp of when the working area was last updated
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -307,7 +280,7 @@ router.put("/:id", async (req: Request, res: Response) => {
     }
 
     await WorkingArea.update(id, req.body);
-    res.status(200).json(workingArea );
+    res.status(200).json({ message: "Working area is updated!" });
   } catch (e) {
     res.status(500).json({ error: "Internal server error!" });
   }
@@ -334,23 +307,13 @@ router.put("/:id", async (req: Request, res: Response) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *           description: Error message
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;

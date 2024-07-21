@@ -5,55 +5,111 @@ import { addUnitValidation } from "../../core/validators/unit/addunit.validator"
 import { Unit } from "../../infrastructure/entities/unit/unit.entity";
 import { updateUnitValidation } from "../../core/validators/unit/updateunit.validator";
 const router = Router();
-
 /**
  * @swagger
  * components:
  *   schemas:
- *     Unit:
+ *     unit_kindStringEnum:
+ *       type: string
+ *       enum:
+ *            - VILLA
+ *            - APPARTMENT
+ *            - TWINHOUSE
+ *            - TOWNHOUSE
+ *            - STUDIO
+ *     unit:
  *       type: object
  *       properties:
  *         id:
  *           type: string
- *           description: The unique identifier of the unit
- *         type:
- *           type: string
- *           enum: [VILLA,APPARTMENT, TWINHOUSE, TOWNHOUSE,STUDIO]
- *           description: The type of the unit
+ *           format: uuid
  *         url:
  *           type: string
- *           description: The URL of the unit
- *         isReady:
- *           type: boolean
- *           description: Indicates whether the unit is ready
- *         deliveryDate:
- *           type: string
- *           description: The delivery date of the unit
+ *           format: url
  *         bedrooms:
  *           type: number
- *           description: The number of bedrooms in the unit
  *         bathrooms:
  *           type: number
- *           description: The number of bathrooms in the unit
  *         squareFootage:
  *           type: number
- *           description: The square footage of the unit
  *         total_price:
  *           type: number
- *           description: The total price of the unit
+ *         type:
+ *           type: string
  *         propertyId:
  *           type: string
- *           description: The unique identifier of the associated property
- *         createdAt:
+ *           format: uuid
+ *     CreateUnitRequest:
+ *       type: object
+ *       properties:
+ *         url:
  *           type: string
- *           format: date-time
- *           description: The date and time when the unit was created
- *         updatedAt:
+ *           format: url
+ *         bedrooms:
+ *           type: number
+ *         bathrooms:
+ *           type: number
+ *         squareFootage:
+ *           type: number
+ *         total_price:
+ *           type: number
+ *         type:
+ *              $ref: '#/components/schemas/unit_kindStringEnum'
+ *     UpdateUnitRequest:
+ *       type: object
+ *       properties:
+ *         url:
  *           type: string
- *           format: date-time
- *           description: The date and time when the unit was last updated
+ *           format: url
+ *         bedrooms:
+ *           type: number
+ *         bathrooms:
+ *           type: number
+ *         squareFootage:
+ *           type: number
+ *         total_price:
+ *           type: number
+ *         type:
+ *              $ref: '#/components/schemas/unit_kindStringEnum'
+ *     UnitResponse:
+ *       type: object
+ *       properties:
+ *         data:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/unit'
+ *     SuccessResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     NotFoundResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     ServerErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     BadResponse:
+ *       type: object
+ *       properties:
+ *         errors:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               type:
+ *                 type: string
+ *               msg:
+ *                 type: string
+ *               param:
+ *                 type: string
+ *               location:
+ *                 type: string
  */
-
 
 /**
  * @swagger
@@ -71,74 +127,34 @@ const router = Router();
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             $ref: '#/components/schemas/CreateUnitRequest'
  *     responses:
  *       '201':
  *         description: Unit created successfully
  *         content:
- *           application/json:    
+ *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/CreateUnitResponse'
+ *               $ref: '#/components/schemas/SuccessResponse'
  *       '400':
  *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/BadResponse'
  *       '404':
  *         description: Property not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *
- * components:
- *   schemas:
- *     CreateUnitRequest:
- *       type: object
- *       properties:
- *         url:
- *           type: string
- *         bedrooms:
- *           type: number
- *         bathrooms:
- *           type: number
- *         squareFootage:
- *           type: number
- *         total_price:
- *           type: number
- *         type:
- *           type: string
- *           enum: [APPARTMENT, HOUSE, TOWNHOUSE]
- *     CreateUnitResponse:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *     ErrorResponse:
- *       type: object
- *       properties:
- *         errors:
- *           type: array
- *           items:
- *             type: object
- *             properties:
- *               msg:
- *                 type: string
- *               param:
- *                 type: string
- *               location:
- *                 type: string
- *         error:
- *           type: string
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.post("/:id", addUnitValidation, async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -181,57 +197,15 @@ router.post("/:id", addUnitValidation, async (req: Request, res: Response) => {
  *       '200':
  *         description: Successful response
  *         content:
- *           application/json:    
+ *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/GetUnitsResponse'
+ *               $ref: '#/components/schemas/UnitResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *
- * components:
- *   schemas:
- *     GetUnitsResponse:
- *       type: object
- *       properties:
- *         data:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/Unit'
- *     Unit:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *         url:
- *           type: string
- *         bedrooms:
- *           type: number
- *         bathrooms:
- *           type: number
- *         squareFootage:
- *           type: number
- *         total_price:
- *           type: number
- *         type:
- *           type: string
- *           enum: [APPARTMENT, HOUSE, TOWNHOUSE]
- *         property:
- *           $ref: '#/components/schemas/Property'
- *     Property:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *         working_area:
- *           type: string
- *     ErrorResponse:
- *       type: object
- *       properties:
- *         error:
- *           type: string
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.get("/", async (req, res) => {
   try {
@@ -262,53 +236,19 @@ router.get("/", async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/GetUnitResponse'
+ *               $ref: '#/components/schemas/UnitResponse'
+ *       '404':
+ *         description: Unit entity not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *
- * components:
- *   schemas:
- *     GetUnitResponse:
- *       type: object
- *       properties:
- *         data:
- *           $ref: '#/components/schemas/Unit'
- *     Unit:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *         url:
- *           type: string
- *         bedrooms:
- *           type: number
- *         bathrooms:
- *           type: number
- *         squareFootage:
- *           type: number
- *         total_price:
- *           type: number
- *         type:
- *           type: string
- *           enum: [APPARTMENT, HOUSE, TOWNHOUSE]
- *         property:
- *           $ref: '#/components/schemas/Property'
- *     Property:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *         working_area:
- *           type: string
- *     ErrorResponse:
- *       type: object
- *       properties:
- *         error:
- *           type: string
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
@@ -322,7 +262,46 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Internal server error!" });
   }
 });
-
+/**
+ * @swagger
+ * /api/unit/{id}:
+ *   put:
+ *     summary: Update a unit entity by ID
+ *     tags:
+ *       - units
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateUnitRequest'
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *       '404':
+ *         description: Unit entity not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundResponse'
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ServerErrorResponse'
+ */
 router.put(
   "/:id",
   updateUnitValidation,
@@ -345,7 +324,36 @@ router.put(
     }
   }
 );
-
+/**
+ * @swagger
+ * /api/unit/{id}:
+ *   delete:
+ *     summary: Delete a unit by ID
+ *     tags:
+ *       - units
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       '204':
+ *         description: Successful response
+ *       '404':
+ *         description: unit not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundResponse'
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ServerErrorResponse'
+ */
 router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   try {

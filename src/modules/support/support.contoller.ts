@@ -5,6 +5,87 @@ import { updateSupportValidation } from "../../core/validators/support/updateSup
 import { validationResult } from "express-validator";
 
 const router = Router();
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Support:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         whatsApp_phone:
+ *           type: string
+ *         phone_number:
+ *           type: string
+ *         mail_us:
+ *           type: string
+ *           format: url
+ *     CreateSupportRequest:
+ *       type: object
+ *       properties:
+ *         whatsApp_phone:
+ *           type: string
+ *           description: WhatsApp_phone of the support
+ *         phone_number:
+ *           type: string
+ *           description: Phone_number of the support
+ *         mail_us:
+ *           type: string
+ *           format: url
+ *           description: Mail_us of the support
+ *     UpdateSupportRequest:
+ *       type: object
+ *       properties:
+ *         whatsApp_phone:
+ *           type: string
+ *         phone_number:
+ *           type: string
+ *         mail_us:
+ *           type: string
+ *           format: url
+ *     SupportResponse:
+ *       type: object
+ *       properties:
+ *         data:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Support'
+ *     SuccessResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     NotFoundResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     ServerErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *     BadResponse:
+ *       type: object
+ *       properties:
+ *         errors:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               type:
+ *                 type: string
+ *               msg:
+ *                 type: string
+ *               param:
+ *                 type: string
+ *               location:
+ *                 type: string
+ */
+
 /**
  * @swagger
  * /api/support:
@@ -24,60 +105,20 @@ const router = Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/CreateSupportResponse'
+ *               $ref: '#/components/schemas/SuccessResponse'
  *       '400':
  *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *       '404':
- *         description: Property not found
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/BadResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  *
- * components:
- *   schemas:
- *     CreateSupportRequest:
- *       type: object
- *       properties:
- *         whatsApp_phone:
- *           type: string
- *           description: WhatsApp_phone of the support
- *         phone_number:
- *           type: string
- *           description: Phone_number of the support
- *         mail_us:
- *           type: string
- *           format: url
- *           description: Mail_us of the support
- *     CreateSupportResponse:
- *       type: object
- *       properties:
- *         message:
- *           type: string
- *     ErrorResponse:
- *       type: object
- *       properties:
- *         errors:
- *           type: array
- *           items:
- *             type: object
- *             properties:
- *               msg:
- *                 type: string
- *               param:
- *                 type: string
- *               location:
- *                 type: string
  */
 router.post("/", addSupportValidation, async (req: Request, res: Response) => {
   try {
@@ -111,13 +152,13 @@ router.post("/", addSupportValidation, async (req: Request, res: Response) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/CreateSupportResponse'
+ *               $ref: '#/components/schemas/SupportResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 router.get("/", async (req, res) => {
   try {
@@ -147,26 +188,26 @@ router.get("/", async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateSupportRequest'
+ *             $ref: '#/components/schemas/UpdateSupportRequest'
  *     responses:
  *       '200':
  *         description: Successful response
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/CreateSupportResponse'
+ *               $ref: '#/components/schemas/SuccessResponse'
  *       '404':
  *         description: Support entity not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/NotFoundResponse'
  *       '500':
  *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/ServerErrorResponse'
  */
 
 router.put(

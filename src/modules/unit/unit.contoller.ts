@@ -23,6 +23,15 @@ const router = Router();
  *         id:
  *           type: string
  *           format: uuid
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *         deleted_at:
+ *           type: string
+ *           format: date-time
  *         url:
  *           type: string
  *           format: url
@@ -36,6 +45,11 @@ const router = Router();
  *           type: number
  *         type:
  *           type: string
+ *         isReady:
+ *           type: boolean
+ *         deliveryDate:
+ *           type: string
+ *           format: date
  *         propertyId:
  *           type: string
  *           format: uuid
@@ -53,6 +67,11 @@ const router = Router();
  *           type: number
  *         total_price:
  *           type: number
+ *         isReady:
+ *           type: boolean
+ *         deliveryDate:
+ *           type: string
+ *           format: date
  *         type:
  *              $ref: '#/components/schemas/unit_kindStringEnum'
  *     UpdateUnitRequest:
@@ -69,6 +88,11 @@ const router = Router();
  *           type: number
  *         total_price:
  *           type: number
+ *         isReady:
+ *           type: boolean
+ *         deliveryDate:
+ *           type: string
+ *           format: date
  *         type:
  *              $ref: '#/components/schemas/unit_kindStringEnum'
  *     UnitResponse:
@@ -127,7 +151,7 @@ const router = Router();
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/CreateUnitRequest'
  *     responses:
@@ -159,8 +183,16 @@ const router = Router();
 router.post("/:id", addUnitValidation, async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const { url, bedrooms, bathrooms, squareFootage, total_price, type } =
-      req.body;
+    const {
+      url,
+      bedrooms,
+      bathrooms,
+      squareFootage,
+      total_price,
+      type,
+      isReady,
+      deliveryDate,
+    } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -177,6 +209,8 @@ router.post("/:id", addUnitValidation, async (req: Request, res: Response) => {
       total_price,
       type,
       url,
+      isReady,
+      deliveryDate,
       propertyId: id,
     }).save();
     res.status(201).json({ message: `unit is created!` });
@@ -219,7 +253,7 @@ router.get("/", async (req, res) => {
 });
 /**
  * @swagger
- * /units/{id}:
+ * /api/unit/{id}:
  *   get:
  *     summary: Get a unit by ID
  *     tags:
@@ -279,7 +313,7 @@ router.get("/:id", async (req, res) => {
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/UpdateUnitRequest'
  *     responses:
@@ -362,7 +396,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({ message: `unit is not found!` });
     }
     await Unit.softRemove(unit);
-    res.status(200).json({ message: `unit is deleted!` });
+    res.status(204).json();
   } catch (e) {
     res.status(500).json({ error: "Internal server error!" });
   }

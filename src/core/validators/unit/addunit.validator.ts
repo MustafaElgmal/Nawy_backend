@@ -26,5 +26,15 @@ export const addUnitValidation = [
     .notEmpty()
     .withMessage("unit photo URL is required")
     .isURL()
-    .withMessage("Invalid photo URL")
+    .withMessage("Invalid photo URL"),
+    body("isReady")
+    .notEmpty()
+    .withMessage("isReady is required")
+    .isBoolean()
+    .withMessage("Invalid boolean"),
+    body("deliveryDate")
+    .notEmpty()
+    .withMessage("Delivery Date is required")
+    .isString()
+    .withMessage("Invalid string"),
 ];

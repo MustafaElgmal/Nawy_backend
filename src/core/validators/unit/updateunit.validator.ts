@@ -7,4 +7,6 @@ export const updateUnitValidation = [
   body("squareFootage").optional().isNumeric().withMessage("Invalid number"),
   body("total_price").optional().isNumeric().withMessage("Invalid number"),
   body("url").optional().isURL().withMessage("Invalid photo URL"),
+  body("isReady").optional().isBoolean().withMessage("Invalid boolean"),
+  body("deliveryDate").optional().isString().withMessage("Invalid string"),
 ];

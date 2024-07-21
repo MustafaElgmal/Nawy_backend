@@ -22,7 +22,7 @@ export class Unit extends AuditableEntity {
   @Column()
   url: string;
 
-  @Column({ default: false })
+  @Column({ default: true })
   isReady: boolean;
 
   @Column({ nullable: true })

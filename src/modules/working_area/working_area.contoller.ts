@@ -14,6 +14,15 @@ const router = Router();
  *         id:
  *           type: string
  *           format: uuid
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *         deleted_at:
+ *           type: string
+ *           format: date-time
  *         name:
  *           type: string
  *         description:
@@ -326,7 +335,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     workingArea.name = workingArea.name + "_d" + `${timestamp}`;
     await workingArea.save();
     await WorkingArea.softRemove(workingArea);
-    res.status(200).json({ message: `workingArea is deleted!` });
+    res.status(204).json();
   } catch (e) {
     console.log(e);
     res.status(500).json({ error: "Internal server error!" });

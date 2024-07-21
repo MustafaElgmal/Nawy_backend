@@ -16,6 +16,15 @@ const router = Router();
  *         id:
  *           type: string
  *           format: uuid
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *         deleted_at:
+ *           type: string
+ *           format: date-time
  *         name:
  *           type: string
  *         owner:
@@ -364,7 +373,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     property.name = property.name + "_d" + `${timestamp}`;
     await property.save();
     await Property.softRemove(property);
-    res.status(200).json({ message: `property is deleted!` });
+    res.status(204).json();
   } catch (e) {
     res.status(500).json({ error: "Internal server error!" });
   }
